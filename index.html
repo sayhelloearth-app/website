@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hello Earth</title>
+<meta name="description" content="Hello Earth is a calm nature puzzle app for children ages 2 to 6. Coming soon to the App Store and Google Play.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3CclipPath id='c'%3E%3Ccircle cx='100' cy='100' r='100'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23c)'%3E%3Crect width='200' height='200' fill='%23D6EAF2'/%3E%3Ccircle cx='133.3' cy='66.7' r='24' fill='%23E8B33C'/%3E%3Cpath d='M-7,127 C53,97 133,97 207,117 L207,207 L-7,207Z' fill='%237FB07A'/%3E%3Cpath d='M-7,160 C60,140 140,143 207,160 L207,207 L-7,207Z' fill='%234F8F5B'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+/* Layout: one calm centered column, like the first page of a board book: the Little Earth puzzle, the name, one line, one signup. */
+:root{
+  --paper:#F5F8F3;      /* faint leaf-tinted white */
+  --surface:#FFFFFF;
+  --ink:#24302E;
+  --ink-soft:#56635F;
+  --line:#D9E2DB;
+  --leaf:#4F8F5B;
+  --sun:#E8B33C;
+  --sky:#D6EAF2;
+  --seam:rgba(255,255,255,.9);
+  --font:'Avenir Next',Avenir,'Nunito Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1A; --surface:#1D2624; --ink:#EEF2EE; --ink-soft:#AAB6B1; --line:#2E3836;
+    --leaf:#7FC08A; --sun:#F0C356; --sky:#20323A; --seam:rgba(20,27,26,.85); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1A; --surface:#1D2624; --ink:#EEF2EE; --ink-soft:#AAB6B1; --line:#2E3836;
+  --leaf:#7FC08A; --sun:#F0C356; --sky:#20323A; --seam:rgba(20,27,26,.85); color-scheme:dark;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{min-height:100%;overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:560px;margin:0 auto;padding-block:clamp(40px,9vh,96px) 32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px}
+
+/* the puzzle: four pieces drift in and click together, then the little world comes alive the way a finished puzzle does in the app (sparkles, a happy hop, the sun glowing), then it drifts apart and loops */
+.puzzle{width:min(240px,62vw);aspect-ratio:1/1;max-width:100%}
+.puzzle svg{display:block;width:100%;height:100%;overflow:visible}
+.puzzle svg *{transform-box:view-box}
+.pc{animation-duration:10s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.45,.05,.25,1)}
+.pc-tl{transform-origin:50px 50px;animation-name:tl}
+.pc-tr{transform-origin:150px 50px;animation-name:tr}
+.pc-bl{transform-origin:50px 150px;animation-name:bl}
+.pc-br{transform-origin:150px 150px;animation-name:br}
+.pieces{animation:pieces 10s linear infinite}
+.done{animation:done 10s linear infinite}
+.seams{fill:none;stroke:var(--seam);stroke-width:2.2;stroke-linejoin:round;animation:seams 10s ease-in-out infinite}
+.whole{transform-origin:100px 100px;animation:pop 10s ease-out infinite}
+.hopper{transform-origin:100px 200px;animation:hop 10s ease-in-out infinite}
+.sun{transform-origin:133.33px 66.67px;animation:sun 10s ease-in-out infinite}
+.halo{transform-origin:133.33px 66.67px;animation:halo 10s ease-out infinite;opacity:0}
+.spark{animation:spark 10s ease-out infinite;opacity:0}
+/* 0-6% scattered, 6-36% drift in, 36-41% click, 39-60% confetti bursts out all round, 43-61% hop, 60-83% sun glows, 84-97% drift apart */
+@keyframes tl{0%,4%{transform:translate(-34px,-26px) rotate(-14deg);opacity:0}12%{opacity:1}36%,84%{transform:none;opacity:1}97%,100%{transform:translate(-34px,-26px) rotate(-14deg);opacity:0}}
+@keyframes tr{0%,6%{transform:translate(32px,-30px) rotate(12deg);opacity:0}14%{opacity:1}36%,84%{transform:none;opacity:1}97%,100%{transform:translate(32px,-30px) rotate(12deg);opacity:0}}
+@keyframes bl{0%,8%{transform:translate(-30px,32px) rotate(10deg);opacity:0}16%{opacity:1}36%,84%{transform:none;opacity:1}97%,100%{transform:translate(-30px,32px) rotate(10deg);opacity:0}}
+@keyframes br{0%,2%{transform:translate(34px,28px) rotate(-11deg);opacity:0}10%{opacity:1}36%,84%{transform:none;opacity:1}97%,100%{transform:translate(34px,28px) rotate(-11deg);opacity:0}}
+@keyframes pieces{0%,41%{opacity:1}41.5%,82%{opacity:0}82.5%,100%{opacity:1}}
+@keyframes done{0%,38%{opacity:0}40%,83%{opacity:1}84.5%,100%{opacity:0}}
+@keyframes seams{0%,35%{opacity:1}39%,85%{opacity:0}91%,100%{opacity:1}}
+@keyframes pop{0%,36%{transform:scale(1)}38.5%{transform:scale(1.07)}41%,100%{transform:scale(1)}}
+@keyframes hop{0%,43%{transform:none}46%{transform:scale(1.05,.94)}52%{transform:translate(0,-24px) scale(.97,1.04)}57.5%{transform:scale(1.04,.96)}61%,100%{transform:none}}
+@keyframes sun{0%,61%{transform:scale(1)}66%{transform:scale(1.08)}71%{transform:scale(1)}76%{transform:scale(1.08)}81%,100%{transform:scale(1)}}
+@keyframes halo{0%,61%{opacity:0;transform:scale(1)}66%{opacity:.5;transform:scale(1.5)}71%{opacity:0;transform:scale(1.9)}71.1%{opacity:0;transform:scale(1)}76%{opacity:.45;transform:scale(1.5)}81%,100%{opacity:0;transform:scale(1.85)}}
+@keyframes spark{0%,38.5%{opacity:0;transform:translate(0,0) rotate(0) scale(.6)}40%{opacity:1;transform:translate(calc(var(--dx)*.25),calc(var(--dy)*.25)) rotate(calc(var(--rot)*.2)) scale(1)}54%{opacity:.9}60%,100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.7)}}
+@media (prefers-reduced-motion: reduce){
+  .puzzle svg *{animation:none!important;transform:none!important}
+  .pieces,.spark,.halo{opacity:0!important}
+  .done{opacity:1!important}
+}
+
+.wordmark{width:min(260px,70vw);height:auto;max-width:100%;display:block}
+.wordmark path{fill:var(--ink)}
+.eyebrow{margin:0;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf)}
+h1{margin:0;font-weight:400;font-size:clamp(24px,4.4vw,32px);line-height:1.25;text-wrap:balance;letter-spacing:-.005em}
+.lede{margin:0;color:var(--ink-soft);font-size:18px;max-width:30em;text-wrap:pretty}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0;padding:0;list-style:none}
+.facts li{font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink)}
+
+/* signup */
+form{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:left;margin-top:6px}
+form label{display:block;font-size:15px;font-weight:600;margin-bottom:10px}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.row input{flex:1 1 200px;min-width:0;font:inherit;font-size:17px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.row button{font:inherit;font-weight:600;font-size:17px;padding:12px 22px;border-radius:12px;border:0;background:var(--ink);color:var(--paper);cursor:pointer}
+.row button:disabled{opacity:.6;cursor:default}
+.row input:focus-visible,.row button:focus-visible,a:focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
+.fine{margin:12px 0 0;font-size:14px;color:var(--ink-soft)}
+.msg{margin:12px 0 0;font-size:15px;font-weight:600;color:var(--leaf)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+footer{max-width:560px;margin:0 auto;padding-block:28px 36px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;font-size:14px;color:var(--ink-soft)}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+  <div class="puzzle" role="img" aria-label="The Hello Earth logo, a little round Earth with a sky, a gold sun and green hills, assembling from four puzzle pieces, then hopping happily as its sun glows">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <clipPath id="earth"><circle cx="100" cy="100" r="100"/></clipPath>
+        <g id="art"><g clip-path="url(#earth)">
+            <rect x="-10" y="-10" width="220" height="220" fill="#D6EAF2"/>
+            <circle cx="133.33" cy="66.67" r="24" fill="#E8B33C"/>
+            <path d="M-6.67,126.67 C53.33,96.67 133.33,96.67 206.67,116.67 L206.67,206.67 L-6.67,206.67 Z" fill="#7FB07A"/>
+            <path d="M-6.67,160 C60,140 140,143.33 206.67,160 L206.67,206.67 L-6.67,206.67 Z" fill="#4F8F5B"/>
+        </g></g>
+        <clipPath id="p-tl"><path d="M-10,-10 L100,-10 L100,38 C110,30 126,32 126,50 C126,68 110,70 100,62 L100,100 L62,100 C70,110 68,126 50,126 C32,126 30,110 38,100 L-10,100 Z"/></clipPath>
+        <clipPath id="p-tr"><path d="M100,-10 L210,-10 L210,100 L162,100 C170,90 168,74 150,74 C132,74 130,90 138,100 L100,100 L100,62 C110,70 126,68 126,50 C126,32 110,30 100,38 Z"/></clipPath>
+        <clipPath id="p-bl"><path d="M-10,100 L38,100 C30,110 32,126 50,126 C68,126 70,110 62,100 L100,100 L100,138 C90,130 74,132 74,150 C74,168 90,170 100,162 L100,210 L-10,210 Z"/></clipPath>
+        <clipPath id="p-br"><path d="M100,100 L138,100 C130,90 132,74 150,74 C168,74 170,90 162,100 L210,100 L210,210 L100,210 L100,162 C90,170 74,168 74,150 C74,132 90,130 100,138 Z"/></clipPath>
+      </defs>
+      <g class="hopper"><g class="whole">
+        <g class="pieces">
+          <g class="pc pc-tl"><g clip-path="url(#p-tl)"><use href="#art"/></g></g>
+          <g class="pc pc-tr"><g clip-path="url(#p-tr)"><use href="#art"/></g></g>
+          <g class="pc pc-bl"><g clip-path="url(#p-bl)"><use href="#art"/></g></g>
+          <g class="pc pc-br"><g clip-path="url(#p-br)"><use href="#art"/></g></g>
+          <g clip-path="url(#earth)"><path class="seams" d="M100,0 L100,38 C110,30 126,32 126,50 C126,68 110,70 100,62 L100,138 C90,130 74,132 74,150 C74,168 90,170 100,162 L100,200 M0,100 L38,100 C30,110 32,126 50,126 C68,126 70,110 62,100 L138,100 C130,90 132,74 150,74 C168,74 170,90 162,100 L200,100"/></g>
+        </g>
+        <g class="done" clip-path="url(#earth)">
+          <rect x="-10" y="-10" width="220" height="220" fill="#D6EAF2"/>
+          <circle class="halo" cx="133.33" cy="66.67" r="24" fill="#F6D27A"/>
+          <circle class="sun" cx="133.33" cy="66.67" r="24" fill="#E8B33C"/>
+          <path d="M-6.67,126.67 C53.33,96.67 133.33,96.67 206.67,116.67 L206.67,206.67 L-6.67,206.67 Z" fill="#7FB07A"/>
+          <path d="M-6.67,160 C60,140 140,143.33 206.67,160 L206.67,206.67 L-6.67,206.67 Z" fill="#4F8F5B"/>
+        </g>
+      </g></g>
+      <g class="sparks">
+        <circle class="spark" cx="159.5" cy="97.8" r="4.5" fill="#E8B33C" style="--dx:105.7px;--dy:-2.9px;--rot:-186deg;animation-delay:0.01s;transform-origin:159.5px 97.8px"/>
+        <rect class="spark" x="163.5" y="106.9" width="7.8" height="3.5" rx="1" fill="#7FB07A" style="--dx:73.2px;--dy:10.7px;--rot:131deg;animation-delay:0.07s;transform-origin:167.5px 108.6px"/>
+        <path class="spark" d="M160.1,133.2 Q164.4,129.4 168.7,133.2 Q164.4,137.1 160.1,133.2 Z" fill="#8CC4DA" style="--dx:65.2px;--dy:41.8px;--rot:-296deg;animation-delay:0.01s;transform-origin:164.4px 133.2px"/>
+        <circle class="spark" cx="148.0" cy="134.9" r="3.9" fill="#4F8F5B" style="--dx:61.8px;--dy:49.3px;--rot:-139deg;animation-delay:0.07s;transform-origin:148.0px 134.9px"/>
+        <rect class="spark" x="149.5" y="154.1" width="5.9" height="2.7" rx="1" fill="#F26B5B" style="--dx:69.4px;--dy:82.1px;--rot:242deg;animation-delay:0.05s;transform-origin:152.5px 155.5px"/>
+        <path class="spark" d="M124.9,162.3 Q128.7,159.0 132.4,162.3 Q128.7,165.7 124.9,162.3 Z" fill="#E8B33C" style="--dx:36.1px;--dy:89.7px;--rot:-135deg;animation-delay:0.04s;transform-origin:128.7px 162.3px"/>
+        <circle class="spark" cx="117.4" cy="166.2" r="5.4" fill="#E8B33C" style="--dx:26.3px;--dy:101.1px;--rot:150deg;animation-delay:0.04s;transform-origin:117.4px 166.2px"/>
+        <rect class="spark" x="98.1" y="182.4" width="6.5" height="2.9" rx="1" fill="#7FB07A" style="--dx:1.2px;--dy:82.1px;--rot:181deg;animation-delay:0.04s;transform-origin:101.4px 183.8px"/>
+        <path class="spark" d="M79.9,154.7 Q83.9,151.2 87.8,154.7 Q83.9,158.3 79.9,154.7 Z" fill="#8CC4DA" style="--dx:-21.2px;--dy:75.9px;--rot:-131deg;animation-delay:0.08s;transform-origin:83.9px 154.7px"/>
+        <circle class="spark" cx="58.2" cy="167.8" r="3.8" fill="#4F8F5B" style="--dx:-44.9px;--dy:78.3px;--rot:124deg;animation-delay:0.06s;transform-origin:58.2px 167.8px"/>
+        <rect class="spark" x="65.0" y="145.6" width="6.5" height="2.9" rx="1" fill="#F26B5B" style="--dx:-62.7px;--dy:94.9px;--rot:-192deg;animation-delay:0.11s;transform-origin:68.3px 147.1px"/>
+        <path class="spark" d="M47.0,145.4 Q50.6,142.1 54.2,145.4 Q50.6,148.6 47.0,145.4 Z" fill="#E8B33C" style="--dx:-62.8px;--dy:59.6px;--rot:276deg;animation-delay:0.03s;transform-origin:50.6px 145.4px"/>
+        <circle class="spark" cx="27.6" cy="137.5" r="3.5" fill="#E8B33C" style="--dx:-108.9px;--dy:58.6px;--rot:-147deg;animation-delay:0.08s;transform-origin:27.6px 137.5px"/>
+        <rect class="spark" x="37.6" y="108.1" width="5.4" height="2.4" rx="1" fill="#7FB07A" style="--dx:-84.5px;--dy:15.2px;--rot:230deg;animation-delay:0.04s;transform-origin:40.3px 109.3px"/>
+        <path class="spark" d="M12.4,93.7 Q16.7,89.8 21.0,93.7 Q16.7,97.6 12.4,93.7 Z" fill="#8CC4DA" style="--dx:-105.7px;--dy:2.4px;--rot:282deg;animation-delay:0.09s;transform-origin:16.7px 93.7px"/>
+        <circle class="spark" cx="36.0" cy="81.1" r="3.9" fill="#4F8F5B" style="--dx:-88.2px;--dy:-24.6px;--rot:131deg;animation-delay:0.01s;transform-origin:36.0px 81.1px"/>
+        <rect class="spark" x="36.0" y="74.4" width="6.8" height="3.1" rx="1" fill="#F26B5B" style="--dx:-67.7px;--dy:-26.9px;--rot:-217deg;animation-delay:0.11s;transform-origin:39.4px 75.9px"/>
+        <path class="spark" d="M45.7,66.3 Q48.9,63.4 52.1,66.3 Q48.9,69.1 45.7,66.3 Z" fill="#E8B33C" style="--dx:-75.7px;--dy:-41.1px;--rot:228deg;animation-delay:0.06s;transform-origin:48.9px 66.3px"/>
+        <circle class="spark" cx="47.3" cy="34.2" r="4.0" fill="#E8B33C" style="--dx:-60.3px;--dy:-70.9px;--rot:-138deg;animation-delay:0.04s;transform-origin:47.3px 34.2px"/>
+        <rect class="spark" x="75.3" y="43.3" width="5.1" height="2.3" rx="1" fill="#7FB07A" style="--dx:-26.4px;--dy:-52.9px;--rot:146deg;animation-delay:0.07s;transform-origin:77.8px 44.4px"/>
+        <path class="spark" d="M78.2,17.7 Q81.7,14.5 85.2,17.7 Q81.7,20.8 78.2,17.7 Z" fill="#8CC4DA" style="--dx:-25.5px;--dy:-104.9px;--rot:213deg;animation-delay:0.11s;transform-origin:81.7px 17.7px"/>
+        <circle class="spark" cx="95.9" cy="28.9" r="5.0" fill="#4F8F5B" style="--dx:-5.7px;--dy:-88.6px;--rot:-265deg;animation-delay:0.10s;transform-origin:95.9px 28.9px"/>
+        <rect class="spark" x="108.9" y="29.2" width="5.6" height="2.5" rx="1" fill="#F26B5B" style="--dx:14.9px;--dy:-87.9px;--rot:-262deg;animation-delay:0.06s;transform-origin:111.7px 30.5px"/>
+        <path class="spark" d="M126.3,41.8 Q129.6,38.8 133.0,41.8 Q129.6,44.8 126.3,41.8 Z" fill="#E8B33C" style="--dx:51.9px;--dy:-91.9px;--rot:292deg;animation-delay:0.04s;transform-origin:129.6px 41.8px"/>
+        <circle class="spark" cx="135.2" cy="50.3" r="5.1" fill="#E8B33C" style="--dx:46.9px;--dy:-57.6px;--rot:-206deg;animation-delay:0.08s;transform-origin:135.2px 50.3px"/>
+        <rect class="spark" x="150.5" y="46.8" width="7.4" height="3.3" rx="1" fill="#7FB07A" style="--dx:87.0px;--dy:-71.8px;--rot:-206deg;animation-delay:0.02s;transform-origin:154.2px 48.4px"/>
+        <path class="spark" d="M166.7,63.2 Q170.0,60.3 173.2,63.2 Q170.0,66.2 166.7,63.2 Z" fill="#8CC4DA" style="--dx:109.3px;--dy:-51.9px;--rot:254deg;animation-delay:0.01s;transform-origin:170.0px 63.2px"/>
+        <circle class="spark" cx="155.4" cy="93.3" r="4.4" fill="#4F8F5B" style="--dx:101.7px;--dy:-5.9px;--rot:-230deg;animation-delay:0.07s;transform-origin:155.4px 93.3px"/>
+      </g>
+    </svg>
+  </div>
+
+  <svg class="wordmark" viewBox="6 238 437 64" role="img" aria-label="Hello Earth"><path d="M50.08 300.0V244.0H55.92V300.0ZM9.12 300.0V244.0H15.04V300.0ZM14.4 274.16V268.96H50.64V274.16Z M90.8 300.4Q84.24 300.4 79.28 297.64Q74.32 294.88 71.52 290.04Q68.72 285.2 68.72 278.96Q68.72 272.72 71.4 267.92Q74.08 263.12 78.76 260.36Q83.44 257.6 89.28 257.6Q95.2 257.6 99.8 260.28Q104.4 262.96 107.04 267.8Q109.68 272.64 109.68 278.96Q109.68 279.36 109.64 279.8Q109.6 280.24 109.6 280.72H73.04V276.48H106.56L104.32 278.16Q104.32 273.6 102.36 270.04Q100.4 266.48 97.04 264.48Q93.68 262.48 89.28 262.48Q84.96 262.48 81.52 264.48Q78.08 266.48 76.16 270.08Q74.24 273.68 74.24 278.32V279.2Q74.24 284.0 76.36 287.64Q78.48 291.28 82.28 293.32Q86.08 295.36 90.96 295.36Q94.8 295.36 98.12 294.0Q101.44 292.64 103.84 289.84L107.04 293.52Q104.24 296.88 100.04 298.64Q95.84 300.4 90.8 300.4Z M121.28 300.0V240.64H126.96V300.0Z M142.8 300.0V240.64H148.48V300.0Z M181.44 300.4Q175.36 300.4 170.52 297.64Q165.68 294.88 162.88 290.04Q160.08 285.2 160.08 278.96Q160.08 272.64 162.88 267.84Q165.68 263.04 170.48 260.32Q175.28 257.6 181.44 257.6Q187.68 257.6 192.52 260.32Q197.36 263.04 200.12 267.84Q202.88 272.64 202.88 278.96Q202.88 285.2 200.12 290.04Q197.36 294.88 192.48 297.64Q187.6 300.4 181.44 300.4ZM181.44 295.36Q186.0 295.36 189.52 293.32Q193.04 291.28 195.08 287.56Q197.12 283.84 197.12 278.96Q197.12 274.0 195.08 270.32Q193.04 266.64 189.52 264.6Q186.0 262.56 181.52 262.56Q177.04 262.56 173.52 264.6Q170.0 266.64 167.92 270.32Q165.84 274.0 165.84 278.96Q165.84 283.84 167.92 287.56Q170.0 291.28 173.52 293.32Q177.04 295.36 181.44 295.36Z M236.64 300.0V244.0H275.04V249.12H242.56V294.88H276.24V300.0ZM241.92 274.08V269.04H271.52V274.08Z M314.64 300.0V290.72L314.4 289.2V273.68Q314.4 268.32 311.4 265.44Q308.4 262.56 302.48 262.56Q298.4 262.56 294.72 263.92Q291.04 265.28 288.48 267.52L285.92 263.28Q289.12 260.56 293.6 259.08Q298.08 257.6 303.04 257.6Q311.2 257.6 315.64 261.64Q320.08 265.68 320.08 273.92V300.0ZM300.16 300.4Q295.44 300.4 291.96 298.84Q288.48 297.28 286.64 294.52Q284.8 291.76 284.8 288.16Q284.8 284.88 286.36 282.2Q287.92 279.52 291.48 277.88Q295.04 276.24 301.04 276.24H315.52V280.48H301.2Q295.12 280.48 292.76 282.64Q290.4 284.8 290.4 288.0Q290.4 291.6 293.2 293.76Q296.0 295.92 301.04 295.92Q305.84 295.92 309.32 293.72Q312.8 291.52 314.4 287.36L315.68 291.28Q314.08 295.44 310.12 297.92Q306.16 300.4 300.16 300.4Z M335.52 300.0V258.0H340.96V269.44L340.4 267.44Q342.16 262.64 346.32 260.12Q350.48 257.6 356.64 257.6V263.12Q356.32 263.12 356.0 263.08Q355.68 263.04 355.36 263.04Q348.72 263.04 344.96 267.08Q341.2 271.12 341.2 278.56V300.0Z M382.08 300.4Q376.16 300.4 372.96 297.2Q369.76 294.0 369.76 288.16V248.72H375.44V287.84Q375.44 291.52 377.32 293.52Q379.2 295.52 382.72 295.52Q386.48 295.52 388.96 293.36L390.96 297.44Q389.28 298.96 386.92 299.68Q384.56 300.4 382.08 300.4ZM362.24 262.72V258.0H388.24V262.72Z M401.28 300.0V240.64H406.96V269.52L405.84 267.36Q407.84 262.8 412.24 260.2Q416.64 257.6 422.72 257.6Q427.84 257.6 431.72 259.56Q435.6 261.52 437.8 265.52Q440.0 269.52 440.0 275.6V300.0H434.32V276.16Q434.32 269.52 431.0 266.12Q427.68 262.72 421.68 262.72Q417.2 262.72 413.88 264.52Q410.56 266.32 408.76 269.72Q406.96 273.12 406.96 277.92V300.0Z"/></svg>
+
+  <p class="eyebrow">Coming soon</p>
+  <h1>A calm nature puzzle app for little ones.</h1>
+  <p class="lede">Children piece together simple, elegant images of animals and plants. Each finished puzzle comes to life, shares one fun fact, and invites them to move and breathe like the creature they just met.</p>
+  <ul class="facts" aria-label="At a glance">
+    <li>Ages 2 to 6</li>
+    <li>iPhone, iPad and Android</li>
+    <li>No ads</li>
+  </ul>
+
+  <form name="hello-list" id="hello-list" novalidate>
+    <p class="hp"><label for="bot-field">Leave this empty</label><input id="bot-field" name="bot-field" tabindex="-1" autocomplete="off"></p>
+    <label for="email">Grown-ups: hear when Hello Earth arrives</label>
+    <div class="row">
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+      <button type="submit" id="send">Tell me</button>
+    </div>
+    <p class="fine" id="fine">One note when we launch, and an occasional hello when new animals arrive. For parents and grandparents only. We never ask for anything about your child.</p>
+    <p class="msg" id="msg" role="status" hidden></p>
+  </form>
+</main>
+
+<footer>
+  <span>Questions? hello@sayhelloearth.com</span>
+  <span>© 2026 Hello Earth</span>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('hello-list');
+  var msg = document.getElementById('msg');
+  var btn = document.getElementById('send');
+  var live = /(^|\.)sayhelloearth\.com$|\.github\.io$/.test(location.hostname);
+  var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeqPQPcmYbt8mF87CIXVes_pONhdOtpKZCzwZPL6ibEVidopA/formResponse';
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('email');
+    if (!email.checkValidity()) { msg.hidden = false; msg.textContent = 'Please enter an email address like name@example.com.'; email.focus(); return; }
+    if (!live) { msg.hidden = false; msg.textContent = 'Preview only: on the live page this adds you to the list. Nothing was saved here.'; return; }
+    btn.disabled = true;
+    var done = function(){ form.querySelector('.row').hidden = true; document.getElementById('fine').hidden = true; msg.hidden = false; msg.textContent = 'Thank you. We’ll say hello when the app arrives.'; };
+    if (document.getElementById('bot-field').value) { done(); return; }
+    var body = new URLSearchParams({'entry.2004177644': email.value.trim()}).toString();
+    fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body})
+      .then(function(){ form.querySelector('.row').hidden = true; document.getElementById('fine').hidden = true; msg.hidden = false; msg.textContent = 'Thank you. We’ll say hello when the app arrives.'; })
+      .catch(function(){ btn.disabled = false; msg.hidden = false; msg.textContent = 'That didn’t go through. Please try again in a moment.'; });
+  });
+})();
+</script>
+
+</body>
+</html>
