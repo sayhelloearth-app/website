@@ -30,8 +30,9 @@
   --paper:#141B1A; --surface:#1D2624; --ink:#EEF2EE; --ink-soft:#AAB6B1; --line:#2E3836;
   --leaf:#7FC08A; --sun:#F0C356; --sky:#20323A; --seam:rgba(20,27,26,.85); color-scheme:dark;
 }
-*{box-sizing:border-box}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{min-height:100%;overflow-x:clip}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -93,11 +94,31 @@ form label{display:block;font-size:15px;font-weight:600;margin-bottom:10px}
 .msg{margin:12px 0 0;font-size:15px;font-weight:600;color:var(--leaf)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
+/* thank-you: a little owl from the same flat, round world as the logo pops up on a branch and waves, with one burst of confetti */
+.thanks{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:4px 0 2px}
+.thanks .msg{margin:0;font-size:17px}
+.owl{width:min(150px,44vw);height:auto;max-width:100%;display:block;overflow:visible}
+.owl *{transform-box:view-box}
+.owl-all{transform-origin:80px 140px;animation:owlpop .7s cubic-bezier(.3,1.6,.5,1) both}
+.owl-wing{transform-origin:110px 84px;animation:wave 4.2s ease-in-out .5s infinite}
+.owl-eyes{transform-origin:80px 78px;animation:blink 5s linear 1.6s infinite}
+.fx{opacity:0;animation:fx 1.5s ease-out .15s both}
+@keyframes owlpop{0%{transform:translateY(18px) scale(.6);opacity:0}60%{opacity:1}100%{transform:none;opacity:1}}
+@keyframes wave{0%{transform:rotate(0)}12%{transform:rotate(-140deg)}20%{transform:rotate(-112deg)}28%{transform:rotate(-142deg)}36%{transform:rotate(-112deg)}44%{transform:rotate(-140deg)}58%,100%{transform:rotate(0)}}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+@keyframes fx{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.5)}12%{opacity:1;transform:translate(calc(var(--dx)*.3),calc(var(--dy)*.3)) rotate(calc(var(--rot)*.2)) scale(1)}70%{opacity:.9}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 14px)) rotate(var(--rot)) scale(.7)}}
+@media (prefers-reduced-motion: reduce){
+  .owl *{animation:none!important}
+  .fx{opacity:0!important}
+  .owl-wing{transform:rotate(-128deg)}
+}
+
 footer{max-width:560px;margin:0 auto;padding-block:28px 36px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;font-size:14px;color:var(--ink-soft)}
 footer a{color:inherit}
 </style>
 </head>
 <body>
+
 <main>
   <div class="puzzle" role="img" aria-label="The Hello Earth logo, a little round Earth with a sky, a gold sun and green hills, assembling from four puzzle pieces, then hopping happily as its sun glows">
     <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -176,13 +197,70 @@ footer a{color:inherit}
 
   <form name="hello-list" id="hello-list" novalidate>
     <p class="hp"><label for="bot-field">Leave this empty</label><input id="bot-field" name="bot-field" tabindex="-1" autocomplete="off"></p>
-    <label for="email">Grown-ups: hear when Hello Earth arrives</label>
+    <label for="email">Grown-ups: be the first to know</label>
     <div class="row">
       <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-      <button type="submit" id="send">Tell me</button>
+      <button type="submit" id="send">Say hello</button>
     </div>
-    <p class="fine" id="fine">One note when we launch, and an occasional hello when new animals arrive. For parents and grandparents only. We never ask for anything about your child.</p>
+    <p class="fine" id="fine">You’ll receive news when we launch, and an occasional hello when new puzzles arrive. We never ask for anything about your child.</p>
     <p class="msg" id="msg" role="status" hidden></p>
+    <div class="thanks" id="thanks" hidden>
+      <svg class="owl" viewBox="0 0 160 160" aria-hidden="true">
+        <g class="owl-all">
+          <path d="M8,142 C50,136 110,136 152,140" fill="none" stroke="#4F8F5B" stroke-width="7" stroke-linecap="round"/>
+          <path d="M132,139 C138,128 148,126 154,128 C150,136 142,140 132,139 Z" fill="#7FB07A"/>
+          <path d="M22,141 C16,131 6,129 2,131 C6,139 14,143 22,141 Z" fill="#7FB07A"/>
+          <path d="M50,60 L51,30 L68,50 Z" fill="#A9774F"/>
+          <path d="M110,60 L109,30 L92,50 Z" fill="#A9774F"/>
+          <ellipse cx="45" cy="102" rx="11" ry="25" fill="#8E6140" transform="rotate(14 45 102)"/>
+          <g class="owl-wing"><ellipse cx="115" cy="102" rx="11" ry="25" fill="#8E6140" transform="rotate(-14 115 102)"/></g>
+          <ellipse cx="80" cy="94" rx="38" ry="45" fill="#A9774F"/>
+          <ellipse cx="80" cy="110" rx="25" ry="26" fill="#EBD7B5"/>
+          <path d="M70,104 q4,4 8,0 M82,104 q4,4 8,0 M76,114 q4,4 8,0 M70,124 q4,4 8,0 M82,124 q4,4 8,0" fill="none" stroke="#CDAF84" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="66" cy="78" r="17" fill="#F3E4C8"/>
+          <circle cx="94" cy="78" r="17" fill="#F3E4C8"/>
+          <g class="owl-eyes">
+            <circle cx="66" cy="78" r="10.5" fill="#FFFFFF"/>
+            <circle cx="94" cy="78" r="10.5" fill="#FFFFFF"/>
+            <circle cx="67" cy="79" r="6.5" fill="#24302E"/>
+            <circle cx="93" cy="79" r="6.5" fill="#24302E"/>
+            <circle cx="69" cy="76.5" r="2" fill="#FFFFFF"/>
+            <circle cx="95" cy="76.5" r="2" fill="#FFFFFF"/>
+          </g>
+          <path d="M75.5,89 L84.5,89 L80,97.5 Z" fill="#E8B33C"/>
+          <circle cx="57" cy="94" r="4" fill="#F2A28F" opacity=".55"/>
+          <circle cx="103" cy="94" r="4" fill="#F2A28F" opacity=".55"/>
+          <ellipse cx="70" cy="137" rx="6" ry="3.5" fill="#E8B33C"/>
+          <ellipse cx="90" cy="137" rx="6" ry="3.5" fill="#E8B33C"/>
+        </g>
+        <g class="burst">
+          <circle class="fx" cx="111.5" cy="86.8" r="3.9" fill="#E8B33C" style="--dx:74.5px;--dy:-2.5px;--rot:-257deg;animation-delay:0.01s;transform-origin:111.5px 86.8px"/>
+          <rect class="fx" x="106.6" y="97.4" width="6.4" height="2.9" rx="1" fill="#7FB07A" style="--dx:53.4px;--dy:17.3px;--rot:137deg;animation-delay:0.03s;transform-origin:109.8px 98.8px"/>
+          <path class="fx" d="M108.6,102.4 Q111.9,99.5 115.1,102.4 Q111.9,105.3 108.6,102.4 Z" fill="#8CC4DA" style="--dx:74.6px;--dy:30.0px;--rot:-267deg;animation-delay:0.07s;transform-origin:111.9px 102.4px"/>
+          <circle class="fx" cx="105.0" cy="110.7" r="3.9" fill="#4F8F5B" style="--dx:41.5px;--dy:33.5px;--rot:156deg;animation-delay:0.06s;transform-origin:105.0px 110.7px"/>
+          <rect class="fx" x="91.4" y="116.8" width="6.8" height="3.1" rx="1" fill="#F26B5B" style="--dx:23.4px;--dy:42.5px;--rot:-215deg;animation-delay:0.01s;transform-origin:94.8px 118.3px"/>
+          <path class="fx" d="M80.5,120.3 Q84.6,116.6 88.7,120.3 Q84.6,124.0 80.5,120.3 Z" fill="#E8B33C" style="--dx:8.9px;--dy:55.5px;--rot:200deg;animation-delay:0.06s;transform-origin:84.6px 120.3px"/>
+          <circle class="fx" cx="76.4" cy="117.1" r="3.8" fill="#7FB07A" style="--dx:-6.6px;--dy:48.0px;--rot:-140deg;animation-delay:0.07s;transform-origin:76.4px 117.1px"/>
+          <rect class="fx" x="58.8" y="115.9" width="5.4" height="2.4" rx="1" fill="#8CC4DA" style="--dx:-31.5px;--dy:44.2px;--rot:-150deg;animation-delay:0.06s;transform-origin:61.5px 117.2px"/>
+          <path class="fx" d="M51.3,115.6 Q55.4,111.9 59.5,115.6 Q55.4,119.3 51.3,115.6 Z" fill="#4F8F5B" style="--dx:-42.3px;--dy:42.2px;--rot:-262deg;animation-delay:0.07s;transform-origin:55.4px 115.6px"/>
+          <circle class="fx" cx="49.8" cy="107.2" r="4.5" fill="#F26B5B" style="--dx:-59.4px;--dy:33.7px;--rot:137deg;animation-delay:0.10s;transform-origin:49.8px 107.2px"/>
+          <rect class="fx" x="41.6" y="96.0" width="6.7" height="3.0" rx="1" fill="#E8B33C" style="--dx:-54.4px;--dy:13.1px;--rot:285deg;animation-delay:0.07s;transform-origin:44.9px 97.5px"/>
+          <path class="fx" d="M39.3,88.4 Q42.8,85.2 46.4,88.4 Q42.8,91.6 39.3,88.4 Z" fill="#7FB07A" style="--dx:-81.6px;--dy:0.9px;--rot:125deg;animation-delay:0.11s;transform-origin:42.8px 88.4px"/>
+          <circle class="fx" cx="46.8" cy="78.3" r="3.6" fill="#8CC4DA" style="--dx:-58.6px;--dy:-15.1px;--rot:153deg;animation-delay:0.09s;transform-origin:46.8px 78.3px"/>
+          <rect class="fx" x="49.9" y="67.2" width="5.3" height="2.4" rx="1" fill="#4F8F5B" style="--dx:-47.0px;--dy:-29.8px;--rot:260deg;animation-delay:0.03s;transform-origin:52.6px 68.4px"/>
+          <path class="fx" d="M52.1,64.2 Q56.3,60.5 60.5,64.2 Q56.3,67.9 52.1,64.2 Z" fill="#F26B5B" style="--dx:-50.8px;--dy:-45.4px;--rot:294deg;animation-delay:0.11s;transform-origin:56.3px 64.2px"/>
+          <circle class="fx" cx="64.4" cy="63.1" r="3.9" fill="#E8B33C" style="--dx:-30.4px;--dy:-43.2px;--rot:-123deg;animation-delay:0.06s;transform-origin:64.4px 63.1px"/>
+          <rect class="fx" x="70.3" y="59.8" width="7.4" height="3.3" rx="1" fill="#7FB07A" style="--dx:-13.4px;--dy:-53.0px;--rot:276deg;animation-delay:0.07s;transform-origin:74.0px 61.5px"/>
+          <path class="fx" d="M82.6,56.9 Q86.6,53.3 90.6,56.9 Q86.6,60.5 82.6,56.9 Z" fill="#8CC4DA" style="--dx:13.8px;--dy:-57.8px;--rot:-236deg;animation-delay:0.11s;transform-origin:86.6px 56.9px"/>
+          <circle class="fx" cx="98.8" cy="58.3" r="4.0" fill="#4F8F5B" style="--dx:33.1px;--dy:-46.4px;--rot:220deg;animation-delay:0.01s;transform-origin:98.8px 58.3px"/>
+          <rect class="fx" x="95.0" y="64.2" width="5.1" height="2.3" rx="1" fill="#F26B5B" style="--dx:35.0px;--dy:-40.2px;--rot:-148deg;animation-delay:0.04s;transform-origin:97.5px 65.4px"/>
+          <path class="fx" d="M100.2,69.9 Q104.3,66.3 108.4,69.9 Q104.3,73.6 100.2,69.9 Z" fill="#E8B33C" style="--dx:44.7px;--dy:-29.6px;--rot:277deg;animation-delay:0.00s;transform-origin:104.3px 69.9px"/>
+          <circle class="fx" cx="110.4" cy="80.8" r="3.2" fill="#7FB07A" style="--dx:60.5px;--dy:-12.8px;--rot:274deg;animation-delay:0.04s;transform-origin:110.4px 80.8px"/>
+        </g>
+      </svg>
+      <p class="msg" role="status">Thank you. We’ll say hello when the app arrives.</p>
+      <p class="fine" id="preview-note" hidden>Preview only: nothing was saved.</p>
+    </div>
   </form>
 </main>
 
@@ -198,17 +276,24 @@ footer a{color:inherit}
   var btn = document.getElementById('send');
   var live = /(^|\.)sayhelloearth\.com$|\.github\.io$/.test(location.hostname);
   var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeqPQPcmYbt8mF87CIXVes_pONhdOtpKZCzwZPL6ibEVidopA/formResponse';
+  var thanks = function(preview){
+    form.querySelector('label[for="email"]').hidden = true;
+    form.querySelector('.row').hidden = true;
+    document.getElementById('fine').hidden = true;
+    msg.hidden = true;
+    document.getElementById('preview-note').hidden = !preview;
+    document.getElementById('thanks').hidden = false;
+  };
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var email = document.getElementById('email');
     if (!email.checkValidity()) { msg.hidden = false; msg.textContent = 'Please enter an email address like name@example.com.'; email.focus(); return; }
-    if (!live) { msg.hidden = false; msg.textContent = 'Preview only: on the live page this adds you to the list. Nothing was saved here.'; return; }
+    if (!live) { thanks(true); return; }
     btn.disabled = true;
-    var done = function(){ form.querySelector('.row').hidden = true; document.getElementById('fine').hidden = true; msg.hidden = false; msg.textContent = 'Thank you. We’ll say hello when the app arrives.'; };
-    if (document.getElementById('bot-field').value) { done(); return; }
+    if (document.getElementById('bot-field').value) { thanks(false); return; }
     var body = new URLSearchParams({'entry.2004177644': email.value.trim()}).toString();
     fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body})
-      .then(function(){ form.querySelector('.row').hidden = true; document.getElementById('fine').hidden = true; msg.hidden = false; msg.textContent = 'Thank you. We’ll say hello when the app arrives.'; })
+      .then(function(){ thanks(false); })
       .catch(function(){ btn.disabled = false; msg.hidden = false; msg.textContent = 'That didn’t go through. Please try again in a moment.'; });
   });
 })();
