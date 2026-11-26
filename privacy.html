@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3CclipPath id='c'%3E%3Ccircle cx='100' cy='100' r='100'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23c)'%3E%3Crect width='200' height='200' fill='%23D6EAF2'/%3E%3Ccircle cx='133.3' cy='66.7' r='24' fill='%23E8B33C'/%3E%3Cpath d='M-7,127 C53,97 133,97 207,117 L207,207 L-7,207Z' fill='%237FB07A'/%3E%3Cpath d='M-7,160 C60,140 140,143 207,160 L207,207 L-7,207Z' fill='%234F8F5B'/%3E%3C/g%3E%3C/svg%3E">
+<title>Hello Earth Privacy</title>
+<meta name="description" content="How Hello Earth handles the email address you give when you sign up on sayhelloearth.com.">
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+:root{
+  --paper:#F5F8F3;      /* faint leaf-tinted white */
+  --surface:#FFFFFF;
+  --ink:#24302E;
+  --ink-soft:#56635F;
+  --line:#D9E2DB;
+  --leaf:#4F8F5B;
+  --sun:#E8B33C;
+  --sky:#D6EAF2;
+  --seam:rgba(255,255,255,.9);
+  --font:'Avenir Next',Avenir,'Nunito Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1A; --surface:#1D2624; --ink:#EEF2EE; --ink-soft:#AAB6B1; --line:#2E3836;
+    --leaf:#7FC08A; --sun:#F0C356; --sky:#20323A; --seam:rgba(20,27,26,.85); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1A; --surface:#1D2624; --ink:#EEF2EE; --ink-soft:#AAB6B1; --line:#2E3836;
+  --leaf:#7FC08A; --sun:#F0C356; --sky:#20323A; --seam:rgba(20,27,26,.85); color-scheme:dark;
+}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{min-height:100%;overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:620px;margin:0 auto;padding-block:clamp(32px,7vh,72px) 32px;display:flex;flex-direction:column;gap:18px}
+.home{display:block;width:min(180px,50vw);align-self:flex-start}
+.wordmark{width:100%;height:auto;display:block}
+.wordmark path{fill:var(--ink)}
+h1{margin:12px 0 0;font-size:clamp(28px,6vw,36px);line-height:1.2;text-wrap:balance}
+.date{margin:0;font-size:14px;color:var(--ink-soft)}
+.intro{margin:0;color:var(--ink-soft);font-size:18px;text-wrap:pretty}
+section{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+h2{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+section p{margin:0;text-wrap:pretty}
+section p+p{margin-top:8px}
+a{color:var(--ink);text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--leaf);outline-offset:2px;border-radius:4px}
+.back{font-weight:600}
+footer{max-width:620px;margin:0 auto;padding-block:28px 36px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;font-size:14px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<main>
+  <a class="home" href="/" aria-label="Hello Earth home">  <svg class="wordmark" viewBox="6 238 437 64" role="img" aria-label="Hello Earth"><path d="M50.08 300.0V244.0H55.92V300.0ZM9.12 300.0V244.0H15.04V300.0ZM14.4 274.16V268.96H50.64V274.16Z M90.8 300.4Q84.24 300.4 79.28 297.64Q74.32 294.88 71.52 290.04Q68.72 285.2 68.72 278.96Q68.72 272.72 71.4 267.92Q74.08 263.12 78.76 260.36Q83.44 257.6 89.28 257.6Q95.2 257.6 99.8 260.28Q104.4 262.96 107.04 267.8Q109.68 272.64 109.68 278.96Q109.68 279.36 109.64 279.8Q109.6 280.24 109.6 280.72H73.04V276.48H106.56L104.32 278.16Q104.32 273.6 102.36 270.04Q100.4 266.48 97.04 264.48Q93.68 262.48 89.28 262.48Q84.96 262.48 81.52 264.48Q78.08 266.48 76.16 270.08Q74.24 273.68 74.24 278.32V279.2Q74.24 284.0 76.36 287.64Q78.48 291.28 82.28 293.32Q86.08 295.36 90.96 295.36Q94.8 295.36 98.12 294.0Q101.44 292.64 103.84 289.84L107.04 293.52Q104.24 296.88 100.04 298.64Q95.84 300.4 90.8 300.4Z M121.28 300.0V240.64H126.96V300.0Z M142.8 300.0V240.64H148.48V300.0Z M181.44 300.4Q175.36 300.4 170.52 297.64Q165.68 294.88 162.88 290.04Q160.08 285.2 160.08 278.96Q160.08 272.64 162.88 267.84Q165.68 263.04 170.48 260.32Q175.28 257.6 181.44 257.6Q187.68 257.6 192.52 260.32Q197.36 263.04 200.12 267.84Q202.88 272.64 202.88 278.96Q202.88 285.2 200.12 290.04Q197.36 294.88 192.48 297.64Q187.6 300.4 181.44 300.4ZM181.44 295.36Q186.0 295.36 189.52 293.32Q193.04 291.28 195.08 287.56Q197.12 283.84 197.12 278.96Q197.12 274.0 195.08 270.32Q193.04 266.64 189.52 264.6Q186.0 262.56 181.52 262.56Q177.04 262.56 173.52 264.6Q170.0 266.64 167.92 270.32Q165.84 274.0 165.84 278.96Q165.84 283.84 167.92 287.56Q170.0 291.28 173.52 293.32Q177.04 295.36 181.44 295.36Z M236.64 300.0V244.0H275.04V249.12H242.56V294.88H276.24V300.0ZM241.92 274.08V269.04H271.52V274.08Z M314.64 300.0V290.72L314.4 289.2V273.68Q314.4 268.32 311.4 265.44Q308.4 262.56 302.48 262.56Q298.4 262.56 294.72 263.92Q291.04 265.28 288.48 267.52L285.92 263.28Q289.12 260.56 293.6 259.08Q298.08 257.6 303.04 257.6Q311.2 257.6 315.64 261.64Q320.08 265.68 320.08 273.92V300.0ZM300.16 300.4Q295.44 300.4 291.96 298.84Q288.48 297.28 286.64 294.52Q284.8 291.76 284.8 288.16Q284.8 284.88 286.36 282.2Q287.92 279.52 291.48 277.88Q295.04 276.24 301.04 276.24H315.52V280.48H301.2Q295.12 280.48 292.76 282.64Q290.4 284.8 290.4 288.0Q290.4 291.6 293.2 293.76Q296.0 295.92 301.04 295.92Q305.84 295.92 309.32 293.72Q312.8 291.52 314.4 287.36L315.68 291.28Q314.08 295.44 310.12 297.92Q306.16 300.4 300.16 300.4Z M335.52 300.0V258.0H340.96V269.44L340.4 267.44Q342.16 262.64 346.32 260.12Q350.48 257.6 356.64 257.6V263.12Q356.32 263.12 356.0 263.08Q355.68 263.04 355.36 263.04Q348.72 263.04 344.96 267.08Q341.2 271.12 341.2 278.56V300.0Z M382.08 300.4Q376.16 300.4 372.96 297.2Q369.76 294.0 369.76 288.16V248.72H375.44V287.84Q375.44 291.52 377.32 293.52Q379.2 295.52 382.72 295.52Q386.48 295.52 388.96 293.36L390.96 297.44Q389.28 298.96 386.92 299.68Q384.56 300.4 382.08 300.4ZM362.24 262.72V258.0H388.24V262.72Z M401.28 300.0V240.64H406.96V269.52L405.84 267.36Q407.84 262.8 412.24 260.2Q416.64 257.6 422.72 257.6Q427.84 257.6 431.72 259.56Q435.6 261.52 437.8 265.52Q440.0 269.52 440.0 275.6V300.0H434.32V276.16Q434.32 269.52 431.0 266.12Q427.68 262.72 421.68 262.72Q417.2 262.72 413.88 264.52Q410.56 266.32 408.76 269.72Q406.96 273.12 406.96 277.92V300.0Z"/></svg></a>
+  <h1>Privacy</h1>
+  <p class="date">Effective November 25, 2026</p>
+  <p class="intro">Hello Earth is a calm nature puzzle app for children ages 2 to 6, coming soon. This page covers this website and its email list. The app will have its own privacy policy when it launches.</p>
+
+  <section>
+    <h2>What we collect</h2>
+    <p>Only the email address a grown-up types into the signup. We don’t ask for a name, a child’s name or anything about a child. This site uses no cookies, ads or analytics.</p>
+  </section>
+
+  <section>
+    <h2>How we use it</h2>
+    <p>To tell you when Hello Earth launches, and to send an occasional hello when new puzzles arrive. We never sell or rent your email address, and we don’t share it with advertisers.</p>
+  </section>
+
+  <section>
+    <h2>Where it’s kept</h2>
+    <p>Signups are stored with Google, in our own Google account. We keep your address until you unsubscribe or ask us to delete it.</p>
+    <p>This site is hosted by GitHub Pages. GitHub records visitors’ IP addresses for security, under <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s own privacy statement</a>.</p>
+  </section>
+
+  <section>
+    <h2>Children</h2>
+    <p>The signup is for parents, grandparents and other grown-ups. We don’t knowingly collect information from children under 13. If you think a child signed up, write to us and we’ll delete it.</p>
+  </section>
+
+  <section>
+    <h2>Your choices</h2>
+    <p>Every email we send includes a way to unsubscribe. To see, change or delete the address we hold, write to hello@sayhelloearth.com.</p>
+  </section>
+
+  <section>
+    <h2>Do Not Track</h2>
+    <p>This site doesn’t track you across other sites, so it works the same whether or not your browser sends a Do Not Track signal.</p>
+  </section>
+
+  <section>
+    <h2>Changes</h2>
+    <p>If this page changes, we’ll update the date at the top. If a change affects how we use your email address, we’ll tell you by email first.</p>
+  </section>
+
+  <p><a class="back" href="/">Back to Hello Earth</a></p>
+</main>
+
+<footer>
+  <span>Questions? hello@sayhelloearth.com</span>
+  <span>© 2026 Hello Earth</span>
+</footer>
+</body>
+</html>
